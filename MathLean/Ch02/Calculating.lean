@@ -26,3 +26,61 @@ example (a b c : ℝ) : a * (b * c) = b * (a * c) := by
   rw [mul_comm]
   rw [mul_assoc]
   rw [mul_comm c]
+
+example (a b c d e f : ℝ) (h : a * b = c * d) (h' : e = f) : a * (b * e) = c * (d * f) := by
+  rw [h']
+  rw [← mul_assoc]
+  rw [h]
+  rw [mul_assoc]
+
+example (a b c d e f : ℝ) (h : b * c = e * f) : a * b * c * d = a * e * f * d := by
+  rw [mul_comm]
+  rw [mul_assoc]
+  rw [mul_comm]
+  rw [h]
+  rw [← mul_assoc]
+
+example (a b c d : ℝ) (hyp : c = b * a - d) (hyp' : d = a * b) : c = 0 := by
+  rw [hyp]
+  rw [hyp']
+  rw [mul_comm]
+  rw [sub_self (a * b)]
+
+example (a b c d e f : ℝ) (h : a * b = c * d) (h' : e = f) : a * (b * e) = c * (d * f) := by
+  rw [h', ← mul_assoc, h, mul_assoc]
+
+variable (a b c d e f : ℝ)
+
+example (h : a * b = c * d) (h' : e = f) : a * (b * e) = c * (d * f) := by
+  rw [h', ← mul_assoc, h, mul_assoc]
+
+section
+variable (a b c : ℝ)
+
+#check a
+#check a + b
+#check (a : ℝ)
+#check mul_comm a b
+#check (mul_comm a b : a * b = b * a)
+#check mul_assoc c a b
+#check mul_comm a
+#check mul_comm
+
+end
+
+example : (a + b) * (a + b) = a * a + 2 * (a * b) + b * b := by
+  rw [mul_add, add_mul, add_mul]
+  rw [← add_assoc, add_assoc (a * a)]
+  rw [mul_comm b a, ← two_mul]
+
+example : (a + b) * (a + b) = a * a + 2 * (a * b) + b * b :=
+  calc
+    (a + b) * (a + b) = a * a + b * a + (a * b + b * b) := by
+      rw [mul_add, add_mul, add_mul]
+    _ = a * a + (b * a + a * b) + b * b := by
+      rw [← add_assoc, add_assoc (a * a)]
+    _ = a * a + 2 * (a * b) + b * b := by
+      rw [mul_comm b a, ← two_mul]
+
+example : (a + b) * (c + d) = a * c + a * d + b * c + b * d := by
+  sorry
