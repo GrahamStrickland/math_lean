@@ -83,4 +83,18 @@ example : (a + b) * (a + b) = a * a + 2 * (a * b) + b * b :=
       rw [mul_comm b a, ← two_mul]
 
 example : (a + b) * (c + d) = a * c + a * d + b * c + b * d := by
-  sorry
+  rw [mul_add, add_mul, add_mul]
+  rw [add_assoc, add_comm, add_comm (a * d) (b * d)]
+  rw [← add_assoc, add_assoc, add_comm]
+  rw [← add_assoc, add_comm (a * d)]
+
+example : (a + b) * (c + d) = a * c + a * d + b * c + b * d := by
+  calc
+    (a + b) * (c + d) = a * c + b * c + (a * d + b * d) := by
+      rw [mul_add, add_mul, add_mul]
+    _ = b * c + (b * d + a * d) + a * c := by
+      rw [add_assoc, add_comm, add_comm (a * d) (b * d)]
+    _ = a * d + a * c + (b * c + b * d) := by
+      rw [← add_assoc, add_assoc, add_comm]
+    _ = a * c + a * d + b * c + b * d := by
+      rw [← add_assoc, add_comm (a * d)]
