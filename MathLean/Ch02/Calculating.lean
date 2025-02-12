@@ -119,3 +119,27 @@ example (a b : ℝ) : (a + b) * (a - b) = a ^ 2 - b ^ 2 := by
       rw [sub_self (a * b), add_zero (a * a)]
     _ = a ^ 2 - b ^ 2 := by
       rw [← pow_two, ← pow_two]
+
+example (a b c d : ℝ) (hyp : c = d * a + b) (hyp' : b = a * d) : c = 2 * a * d := by
+  rw [hyp'] at hyp
+  rw [mul_comm d a] at hyp
+  rw [← two_mul (a * d)] at hyp
+  rw [← mul_assoc 2 a d] at hyp
+  exact hyp
+
+example : c * b * a = b * (a * c) := by
+  ring
+
+example : (a + b) * (a + b) = a * a + 2 * (a * b) + b * b := by
+  ring
+
+example : (a + b) * (a - b) = a ^ 2 - b ^ 2 := by
+  ring
+
+example (hyp : c = d * a + b) (hyp' : b = a * d) : c = 2 * a * d := by
+  rw [hyp, hyp']
+  ring
+
+example (a b c : ℕ) (h : a + b = c) : (a + b) * (a + b) = a * c + b * c := by
+  nth_rw 2 [h]
+  rw [add_mul]
