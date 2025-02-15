@@ -49,4 +49,17 @@ theorem add_right_cancel {a b c : R} (h : a + b = c + b) : a = c := by
   rw [← add_zero a, ← neg_add_cancel b, add_comm, add_assoc, add_comm b a]
   rw [h, ← add_assoc, add_comm, ← add_assoc, add_comm, ← add_assoc, add_neg_cancel_right]
 
+theorem mul_zero (a : R) : a * 0 = 0 := by
+  have h : a * 0 + a * 0 = a * 0 + 0 := by
+    rw [← mul_add, add_zero, add_zero]
+  rw [add_left_cancel h]
+
 end MyRing
+
+theorem zero_mul (a : R) : 0 * a = 0 := by
+  have h : 0 * a + 0 * a = 0 + 0 * a := by
+    rw [mul_comm 0 a, ← mul_add, add_zero, add_comm, add_zero (a * 0)]
+  rw [add_right_cancel h]
+
+theorem neg_eq_of_add_eq_zero {a b : R} (h : a + b = 0) : -a = b := by
+  sorry
