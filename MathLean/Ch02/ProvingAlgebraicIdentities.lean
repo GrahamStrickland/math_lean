@@ -64,3 +64,7 @@ theorem zero_mul (a : R) : 0 * a = 0 := by
 theorem neg_eq_of_add_eq_zero {a b : R} (h : a + b = 0) : -a = b := by
   rw [← add_zero (a), ← sub_self b, add_sub]
   rw [h, sub_eq_add_neg, zero_add, neg_neg]
+
+theorem eq_neg_of_add_eq_zero {a b : R} (h : a + b = 0) : a = -b := by
+  rw [← add_zero (a), ← sub_self b, add_sub]
+  rw [h, sub_eq_add_neg, zero_add]
