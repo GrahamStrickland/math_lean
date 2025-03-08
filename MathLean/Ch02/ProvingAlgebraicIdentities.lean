@@ -30,7 +30,7 @@ variable {R : Type*} [Ring R]
 
 theorem add_zero (a : R) : a + 0 = a := by rw [add_comm, zero_add]
 
-theorem add_right_neg (a : ℝ) : a + -a = 0 := by rw [add_comm, neg_add_cancel]
+theorem add_right_neg (a : R) : a + -a = 0 := by rw [add_comm, neg_add_cancel]
 
 #check MyRing.add_zero
 #check add_zero
@@ -54,13 +54,6 @@ theorem mul_zero (a : R) : a * 0 = 0 := by
     rw [← mul_add, add_zero, add_zero]
   rw [add_left_cancel h]
 
-end MyRing
-
-theorem zero_mul (a : R) : 0 * a = 0 := by
-  have h : 0 * a + 0 * a = 0 + 0 * a := by
-    rw [mul_comm 0 a, ← mul_add, add_zero, add_comm, add_zero (a * 0)]
-  rw [add_right_cancel h]
-
 theorem neg_eq_of_add_eq_zero {a b : R} (h : a + b = 0) : -a = b := by
   rw [← add_zero (a), ← sub_self b, add_sub]
   rw [h, sub_eq_add_neg, zero_add, neg_neg]
@@ -68,3 +61,20 @@ theorem neg_eq_of_add_eq_zero {a b : R} (h : a + b = 0) : -a = b := by
 theorem eq_neg_of_add_eq_zero {a b : R} (h : a + b = 0) : a = -b := by
   rw [← add_zero (a), ← sub_self b, add_sub]
   rw [h, sub_eq_add_neg, zero_add]
+
+theorem neg_zero : (-0 : R) = 0 := by
+  apply neg_eq_of_add_eq_zero
+  rw [add_zero]
+
+theorem neg_neg (a : R) : - -a = a := by
+  rw [← zero_add (-a), ← sub_self a]
+  rw [add_comm, add_sub, add_comm]
+  rw [← add_zero (-a), ← add_assoc, add_right_neg]
+  rw [zero_add, ]
+
+end MyRing
+
+theorem zero_mul (a : R) : 0 * a = 0 := by
+  have h : 0 * a + 0 * a = 0 + 0 * a := by
+    rw [mul_comm 0 a, ← mul_add, add_zero, add_comm, add_zero (a * 0)]
+  rw [add_right_cancel h]
