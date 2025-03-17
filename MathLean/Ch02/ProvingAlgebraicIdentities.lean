@@ -95,3 +95,29 @@ example (a b : ℝ) : a - b = a + -b :=
 
 example (a b : ℝ) : a - b = a + -b := by
   rfl
+
+variable (A : Type*) [AddGroup A]
+
+#check (add_assoc : ∀ a b c : A, a + b + c = a + (b + c))
+#check (zero_add : ∀ a : A, 0 + a = a)
+#check (neg_add_cancel : ∀ a : A, -a + a = 0)
+
+variable (G : Type*) [Group G]
+
+#check (mul_assoc : ∀ a b c : G, a * b * c = a * (b * c))
+#check (one_mul : ∀ a : G, 1 * a = a)
+#check (inv_mul_cancel : ∀ a : G, a⁻¹ * a = 1)
+
+namespace MyGroup
+variable {G : Type*} [Group G]
+
+theorem mul_inv_cancel (a : G) : a * a⁻¹ = 1 := by
+  rw [← one_mul (a * a⁻¹), ← mul_assoc]
+
+theorem mul_one (a : G) : a * 1 = a := by
+  sorry
+
+theorem mul_inv_rev (a b : G) : (a * b)⁻¹ = b⁻¹ * a⁻¹ := by
+  sorry
+
+end MyGroup
