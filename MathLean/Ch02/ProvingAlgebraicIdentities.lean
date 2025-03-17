@@ -71,9 +71,27 @@ theorem neg_neg (a : R) : - -a = a := by
   rw [← sub_self a, sub_sub, add_right_neg]
   rw [sub_eq_add_neg, neg_zero, add_zero]
 
+theorem self_sub (a : R) : a - a = 0 := by
+  rw [sub_eq_add_neg, add_right_neg]
+
+theorem one_add_one_eq_two : 1 + 1 = (2 : R) := by
+  norm_num
+
+theorem two_mul (a : R) : 2 * a = a + a := by
+  rw [← one_add_one_eq_two, add_mul, one_mul]
+
 end MyRing
 
 theorem zero_mul (a : R) : 0 * a = 0 := by
   have h : 0 * a + 0 * a = 0 + 0 * a := by
     rw [mul_comm 0 a, ← mul_add, add_zero, add_comm, add_zero (a * 0)]
   rw [add_right_cancel h]
+
+example (a b : R) : a - b = a + -b :=
+  sub_eq_add_neg a b
+
+example (a b : ℝ) : a - b = a + -b :=
+  rfl
+
+example (a b : ℝ) : a - b = a + -b := by
+  rfl
